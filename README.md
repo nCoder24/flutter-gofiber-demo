@@ -1,2 +1,3 @@
-# flutter-gofiber-demo
-Demo to describe the best practices to follow
+# Flutter GoFiber Demo
+
+Demo to describe the best practices, directory structure and testing
