@@ -1,9 +1,18 @@
 package routes
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"demo/services"
+
+	"github.com/gofiber/fiber/v2"
+)
 
 func getUsers(c *fiber.Ctx) error {
-	return c.SendString("Users")
+	users, err := services.GetUsers()
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(users)
 }
 
 func addUser(c *fiber.Ctx) error {
