@@ -10,6 +10,6 @@ import (
 func registerUserRoutes(router fiber.Router, services service.Services) {
 	handler := handler.NewUserHandler(services.UserService)
 
-	router.Get("/", handler.GetUsers)
+	router.Get("/:username", handler.GetAccount)
 	router.Post("/", handler.AddUser)
 }

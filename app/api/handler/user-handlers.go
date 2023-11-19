@@ -7,22 +7,24 @@ import (
 )
 
 type UserHandler struct {
-	usrService service.UserService
+	service service.UserService
 }
 
-func NewUserHandler(usrService service.UserService) UserHandler {
-	return UserHandler{usrService}
+func NewUserHandler(service service.UserService) UserHandler {
+	return UserHandler{service}
 }
 
-func (h UserHandler) GetUsers(c *fiber.Ctx) error {
-	users, err := h.usrService.GetAllAccounts()
+func (handler UserHandler) GetAccount(c *fiber.Ctx) error {
+	username := c.Params("username")
+	account, err := handler.service.GetAccount(username)
+
 	if err != nil {
 		return err
 	}
 
-	return c.JSON(users)
+	return c.JSON(account)
 }
 
-func (h UserHandler) AddUser(c *fiber.Ctx) error {
+func (handler UserHandler) AddUser(c *fiber.Ctx) error {
 	return c.SendString("User Added")
 }
