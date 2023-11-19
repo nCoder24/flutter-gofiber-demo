@@ -1,7 +1,7 @@
 package main
 
 import (
-	"demo/routes"
+	"demo/app/api/routes"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"

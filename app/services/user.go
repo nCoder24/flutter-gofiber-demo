@@ -2,7 +2,7 @@ package services
 
 import (
 	"demo/database"
-	"demo/models"
+	"demo/domain/models"
 )
 
 func GetUsers() ([]models.User, error) {

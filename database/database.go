@@ -1,6 +1,6 @@
 package database
 
-import "demo/models"
+import "demo/domain/models"
 
 func GetUsers() ([]models.User, error) {
 	return []models.User{
