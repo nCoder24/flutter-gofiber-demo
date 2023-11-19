@@ -1,7 +1,7 @@
 package service
 
 import (
-	"demo/domain/models"
+	"demo/core/models"
 )
 
 type UserService struct {
