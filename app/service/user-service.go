@@ -20,5 +20,9 @@ func (service *UserService) GetAccount(username string) (models.Account, error) 
 		return models.Account{}, err
 	}
 
-	return models.CreateAccount(data.Username, data.Password), nil
+	return models.AccountWith(data.Username, data.Password), nil
+}
+
+func (service *UserService) CreateAccount(acDetails models.AccountDetails) error {
+	return service.db.InsertNewAccount(acDetails)
 }

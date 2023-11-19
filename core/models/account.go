@@ -5,7 +5,7 @@ type Account struct {
 	password string
 }
 
-func CreateAccount(username string, password string) Account {
+func AccountWith(username string, password string) Account {
 	return Account{
 		Username: username,
 		password: password,

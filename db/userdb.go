@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"demo/core/models"
 	"demo/db/schema"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -18,8 +19,17 @@ func getUserDB(db *mongo.Database) UserDB {
 
 func (db UserDB) GetAccountByUsername(username string) (schema.Account, error) {
 	filter := bson.D{{Key: "username", Value: username}}
-	var account schema.Account
+	account := new(schema.Account)
 
-	err := db.accounts.FindOne(context.TODO(), filter).Decode(&account)
-	return account, err
+	err := db.accounts.FindOne(context.TODO(), filter).Decode(account)
+	return *account, err
+}
+
+func (db UserDB) InsertNewAccount(acData models.AccountDetails) error {
+	_, err := db.accounts.InsertOne(context.TODO(), schema.Account{
+		Username: acData.Username,
+		Password: acData.Password,
+	})
+
+	return err
 }

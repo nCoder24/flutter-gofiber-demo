@@ -2,6 +2,7 @@ package handler
 
 import (
 	"demo/app/service"
+	"demo/core/models"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -25,6 +26,16 @@ func (handler UserHandler) GetAccount(c *fiber.Ctx) error {
 	return c.JSON(account)
 }
 
-func (handler UserHandler) AddUser(c *fiber.Ctx) error {
-	return c.SendString("User Added")
+func (handler UserHandler) CreateAccount(c *fiber.Ctx) error {
+	acDetails := new(models.AccountDetails)
+
+	if err := c.BodyParser(acDetails); err != nil {
+		return err
+	}
+
+	if err := handler.service.CreateAccount(*acDetails); err != nil {
+		return err
+	}
+
+	return c.SendStatus(201)
 }
