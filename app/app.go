@@ -1,8 +1,8 @@
 package app
 
 import (
-	"demo/app/api/routes"
-	"demo/app/services"
+	"demo/app/api/router"
+	"demo/app/service"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -12,8 +12,8 @@ func CreateApp() *fiber.App {
 	app := fiber.New()
 	app.Use(logger.New())
 
-	services := services.InitServices(services.InitUserService())
-	routes.RegisterRoutes(app, services)
+	services := service.InitServices(service.InitUserService())
+	router.RegisterRoutes(app, services)
 
 	return app
 }

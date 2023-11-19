@@ -1,16 +1,16 @@
-package handlers
+package handler
 
 import (
-	"demo/app/services"
+	"demo/app/service"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 type UserHandler struct {
-	usrService services.UserService
+	usrService service.UserService
 }
 
-func NewUserHandler(usrService services.UserService) UserHandler {
+func NewUserHandler(usrService service.UserService) UserHandler {
 	return UserHandler{usrService}
 }
 
