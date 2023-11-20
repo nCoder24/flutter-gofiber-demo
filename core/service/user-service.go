@@ -2,14 +2,14 @@ package service
 
 import (
 	"demo/core/models"
-	"demo/db"
+	"demo/database"
 )
 
 type UserService struct {
-	db db.UserDB
+	db database.UserDB
 }
 
-func initUserService(db db.DB) UserService {
+func initUserService(db database.DB) UserService {
 	return UserService{db.UserDB}
 }
 
@@ -25,4 +25,14 @@ func (service *UserService) GetAccount(username string) (models.Account, error) 
 
 func (service *UserService) CreateAccount(acDetails models.AccountDetails) error {
 	return service.db.InsertNewAccount(acDetails)
+}
+
+func (service *UserService) AuthenticateUser(username, password string) (bool, error) {
+	ac, err := service.GetAccount(username)
+
+	if err != nil {
+		return false, err
+	}
+
+	return ac.Authenticate(password), nil
 }

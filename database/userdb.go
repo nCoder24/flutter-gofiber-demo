@@ -1,9 +1,10 @@
-package db
+package database
 
 import (
 	"context"
 	"demo/core/models"
-	"demo/db/schema"
+	"demo/database/schema"
+	"fmt"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -22,6 +23,7 @@ func (db UserDB) GetAccountByUsername(username string) (schema.Account, error) {
 	account := new(schema.Account)
 
 	err := db.accounts.FindOne(context.TODO(), filter).Decode(account)
+	fmt.Println(err)
 	return *account, err
 }
 

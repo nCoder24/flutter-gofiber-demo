@@ -1,15 +1,15 @@
-package app
+package server
 
 import (
-	"demo/app/api/router"
-	"demo/app/service"
-	"demo/db"
+	"demo/api/router"
+	"demo/core/service"
+	"demo/database"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
-func CreateApp(db db.DB) *fiber.App {
+func CreateServer(db database.DB) *fiber.App {
 	app := fiber.New()
 	app.Use(logger.New())
 

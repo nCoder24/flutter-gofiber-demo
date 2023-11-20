@@ -1,9 +1,9 @@
 package main
 
 import (
-	"demo/app"
+	"demo/api/server"
 	"demo/config"
-	"demo/db"
+	"demo/database"
 	"os"
 )
 
@@ -13,6 +13,6 @@ func main() {
 	dbURI := os.Getenv("MONGODB_URI")
 	port := ":" + os.Getenv("PORT")
 
-	db := db.GetDB(db.Connect(dbURI))
-	app.CreateApp(db).Listen(port)
+	db := database.GetDB(database.Connect(dbURI))
+	server.CreateServer(db).Listen(port)
 }

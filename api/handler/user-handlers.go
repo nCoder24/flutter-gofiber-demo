@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"demo/app/service"
 	"demo/core/models"
+	"demo/core/service"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -30,12 +30,35 @@ func (handler UserHandler) CreateAccount(c *fiber.Ctx) error {
 	acDetails := new(models.AccountDetails)
 
 	if err := c.BodyParser(acDetails); err != nil {
-		return err
+		return err // Check if there's a better way of handling server err
 	}
 
 	if err := handler.service.CreateAccount(*acDetails); err != nil {
 		return err
 	}
 
-	return c.SendStatus(201)
+	return c.SendStatus(fiber.StatusCreated)
+}
+
+func (handler UserHandler) Login(c *fiber.Ctx) error {
+	credentials := new(struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	})
+
+	if err := c.BodyParser(credentials); err != nil {
+		return err
+	}
+
+	success, err := handler.service.AuthenticateUser(credentials.Username, credentials.Password)
+
+	if err != nil {
+		return err
+	}
+
+	if success {
+		return c.SendStatus(fiber.StatusAccepted)
+	}
+
+	return c.SendStatus(fiber.StatusUnauthorized)
 }
