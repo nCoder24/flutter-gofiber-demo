@@ -9,7 +9,7 @@ type UserService struct {
 	db db.UserDB
 }
 
-func InitUserService(db db.DB) UserService {
+func initUserService(db db.DB) UserService {
 	return UserService{db.UserDB}
 }
 

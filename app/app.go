@@ -13,8 +13,7 @@ func CreateApp(db db.DB) *fiber.App {
 	app := fiber.New()
 	app.Use(logger.New())
 
-	services := service.InitServices(service.InitUserService(db))
-	router.RegisterRoutes(app, services)
+	router.RegisterRoutes(app, service.InitServices(db))
 
 	return app
 }

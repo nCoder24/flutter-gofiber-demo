@@ -1,9 +1,11 @@
 package service
 
+import "demo/db"
+
 type Services struct {
 	UserService UserService
 }
 
-func InitServices(user UserService) Services {
-	return Services{user}
+func InitServices(db db.DB) Services {
+	return Services{initUserService(db)}
 }
