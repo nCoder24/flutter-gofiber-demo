@@ -57,7 +57,7 @@ class HomePage extends StatelessWidget {
                           if (value != null)
                             {
                               bloc.signInUser(value),
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const ProfilePage()),

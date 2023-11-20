@@ -4,22 +4,13 @@ import 'package:frontend/src/models/user_details.dart';
 import 'package:http/http.dart' show Client;
 import 'dart:convert';
 
-class MyResponse {
-  late int statusCode;
-  late String body;
-  MyResponse(this.statusCode, this.body);
-}
-
 class UserApiProvider {
   Client client = Client();
 
   Future<UserDetails> signUpUser(Map userCredentials) async {
     debugPrint("Signing Up the User");
-    Uri uri = Uri.parse("http://localhost:8000/signup");
-    // final response = await client.post(uri);
-
-    final details = {'username': "SaumaSaha", 'repos': []};
-    var response = MyResponse(200, jsonEncode(details));
+    Uri uri = Uri.parse("http://localhost:3000/user");
+    final response = await client.post(uri);
 
     debugPrint(response.body.toString());
     if (response.statusCode == 200) {
@@ -30,12 +21,9 @@ class UserApiProvider {
   }
 
   Future<UserDetails> signInUser(userCredentials) async {
-    debugPrint("Signing Up the User");
-    Uri uri = Uri.parse("http://localhost:8000/signin");
-    // final response = await client.get(uri);
-
-    final details = {'username': "SaumaSaha", 'repos': []};
-    var response = MyResponse(200, jsonEncode(details));
+    debugPrint("Signing In the User");
+    Uri uri = Uri.parse("http://localhost:3000/user/signin");
+    final response = await client.post(uri);
 
     debugPrint(response.body.toString());
     if (response.statusCode == 200) {

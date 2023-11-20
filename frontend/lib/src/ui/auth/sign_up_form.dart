@@ -20,14 +20,14 @@ class SignUpFormState extends State<SignUpForm> {
       backgroundColor: Theme.of(context).colorScheme.background,
       elevation: 16,
       child: SizedBox(
-        height: 400,
+        height: 450,
         width: 350,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: FormBuilder(
             key: _formKey,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Align(
                     alignment: Alignment.topRight,
