@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/src/bloc/service_bloc.dart';
-import 'package:frontend/src/ui/auth_form.dart';
+import 'package:frontend/src/bloc/bloc.dart';
+import 'package:frontend/src/ui/auth/sign_in_form.dart';
+import 'package:frontend/src/ui/auth/sign_up_form.dart';
+import 'package:frontend/src/ui/profile_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -35,7 +37,7 @@ class HomePage extends StatelessWidget {
                           builder: (context) => const SignUpForm()).then(
                         (value) => {
                           debugPrint(value.toString()),
-                          if (value != null) bloc.validate(value),
+                          if (value != null) bloc.signUpUser(value),
                         },
                       )
                     },
@@ -45,7 +47,25 @@ class HomePage extends StatelessWidget {
                     width: 20,
                   ),
                   ElevatedButton(
-                    onPressed: () => {},
+                    onPressed: () => {
+                      showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) => const SignInForm()).then(
+                        (value) => {
+                          debugPrint(value.toString()),
+                          if (value != null)
+                            {
+                              bloc.signInUser(value),
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const ProfilePage()),
+                              )
+                            }
+                        },
+                      )
+                    },
                     child: const Text("Sign In"),
                   )
                 ],

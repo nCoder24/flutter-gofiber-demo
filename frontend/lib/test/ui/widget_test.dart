@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:frontend/src/app.dart';
-import 'package:frontend/src/ui/auth_form.dart';
+import 'package:frontend/src/ui/auth/sign_up_form.dart';
 
 void main() {
   testWidgets('Verify sign up sign in button present',

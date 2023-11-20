@@ -20,7 +20,7 @@ class PasswordTextFieldState extends State<PasswordTextField> {
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
-      name: "password field",
+      name: "password",
       key: const Key("password"),
       obscureText: !_passwordVisible,
       decoration: InputDecoration(
@@ -29,7 +29,7 @@ class PasswordTextFieldState extends State<PasswordTextField> {
         suffixIcon: IconButton(
             icon: Icon(
               _passwordVisible ? Icons.visibility : Icons.visibility_off,
-              color: Theme.of(context).primaryColorDark,
+              color: Theme.of(context).colorScheme.primary,
             ),
             onPressed: () => toggleVisibility()),
       ),

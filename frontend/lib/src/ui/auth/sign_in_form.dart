@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:frontend/src/ui/password_text_field.dart';
+import 'package:frontend/src/ui/auth/password_text_field.dart';
 
-class SignUpForm extends StatefulWidget {
-  const SignUpForm({super.key});
+class SignInForm extends StatefulWidget {
+  const SignInForm({super.key});
 
   @override
-  State<StatefulWidget> createState() => AuthFormState();
+  State<StatefulWidget> createState() => SignInFormState();
 }
 
-class AuthFormState extends State<SignUpForm> {
+class SignInFormState extends State<SignInForm> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   final textEditingController = TextEditingController();
 
@@ -36,7 +36,7 @@ class AuthFormState extends State<SignUpForm> {
                       icon: const Icon(Icons.clear),
                     )),
                 const Text(
-                  "Sign Up",
+                  "Sign In",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
