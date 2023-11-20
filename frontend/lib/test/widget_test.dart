@@ -20,7 +20,7 @@ void main() {
       'Verify that the two input widgets are present on the auth form page',
       (WidgetTester tester) async {
     //Arrange - Pump AddUser() widget to tester
-    await tester.pumpWidget(const MaterialApp(home: AuthForm()));
+    await tester.pumpWidget(const MaterialApp(home: SignUpForm()));
 
     //Act - Find button by type
     var textField = find.byType(TextFormField);
@@ -32,7 +32,7 @@ void main() {
   testWidgets('Verify that submit button is present on the auth form page',
       (WidgetTester tester) async {
     //Arrange - Pump AddUser() widget to tester
-    await tester.pumpWidget(const MaterialApp(home: AuthForm()));
+    await tester.pumpWidget(const MaterialApp(home: SignUpForm()));
 
     //Act - Find button by type
     var textField = find.byType(ElevatedButton);

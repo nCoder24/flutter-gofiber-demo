@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/src/bloc/service_bloc.dart';
 import 'package:frontend/src/ui/auth_form.dart';
 
 class HomePage extends StatelessWidget {
@@ -30,7 +31,13 @@ class HomePage extends StatelessWidget {
                     onPressed: () => {
                       showDialog(
                           context: context,
-                          builder: (context) => const AuthForm())
+                          barrierDismissible: false,
+                          builder: (context) => const SignUpForm()).then(
+                        (value) => {
+                          debugPrint(value.toString()),
+                          if (value != null) bloc.validate(value),
+                        },
+                      )
                     },
                     child: const Text("Sign Up"),
                   ),

@@ -1,39 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:frontend/src/ui/password_text_field.dart';
 
-class AuthForm extends StatefulWidget {
-  const AuthForm({super.key});
+class SignUpForm extends StatefulWidget {
+  const SignUpForm({super.key});
 
   @override
   State<StatefulWidget> createState() => AuthFormState();
 }
 
-class AuthFormState extends State<AuthForm> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class AuthFormState extends State<SignUpForm> {
+  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
+  final textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      backgroundColor: Theme.of(context).colorScheme.background,
       elevation: 16,
       child: SizedBox(
         height: 300,
         width: 350,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Form(
+          child: FormBuilder(
             key: _formKey,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Align(
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(Icons.clear),
+                    )),
                 const Text(
-                  "Details",
+                  "Sign Up",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 15,
                 ),
-                TextFormField(
+                FormBuilderTextField(
+                  name: "username field",
                   key: const Key("username"),
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -49,31 +59,17 @@ class AuthFormState extends State<AuthForm> {
                 const SizedBox(
                   height: 20,
                 ),
-                TextFormField(
-                  key: const Key("password"),
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter Password',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter password';
-                    }
-                    return null;
-                  },
-                ),
+                const PasswordTextField(),
                 const SizedBox(
                   height: 20,
                 ),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      _formKey.currentState?.save();
+                      final formData = _formKey.currentState?.value;
                       _formKey.currentState?.reset();
-                      Navigator.pop(context);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
+                      Navigator.pop(context, formData);
                     }
                   },
                   child: const Text("Submit"),
