@@ -14,14 +14,14 @@ class HomePage extends StatelessWidget {
         title: const Text("Demo App"),
       ),
       body: Container(
-        color: Theme.of(context).colorScheme.primary,
+        color: Theme.of(context).colorScheme.primaryContainer,
         child: Center(
           child: Container(
             height: 200,
             width: 300,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Theme.of(context).colorScheme.primaryContainer,
+              color: Theme.of(context).colorScheme.primary,
             ),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -36,7 +36,6 @@ class HomePage extends StatelessWidget {
                           barrierDismissible: false,
                           builder: (context) => const SignUpForm()).then(
                         (value) => {
-                          debugPrint(value.toString()),
                           if (value != null) bloc.signUpUser(value),
                         },
                       )
@@ -53,14 +52,14 @@ class HomePage extends StatelessWidget {
                           barrierDismissible: false,
                           builder: (context) => const SignInForm()).then(
                         (value) => {
-                          debugPrint(value.toString()),
                           if (value != null)
                             {
                               bloc.signInUser(value),
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const ProfilePage()),
+                                    builder: (context) => ProfilePage(
+                                        username: value["username"])),
                               )
                             }
                         },

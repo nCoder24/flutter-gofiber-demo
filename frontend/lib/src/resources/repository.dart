@@ -4,7 +4,12 @@ import 'package:frontend/src/resources/user_api_provider.dart';
 class Repository {
   final userApiProvider = UserApiProvider();
 
-  Future<UserDetails> signUpUser(userCredentials) => userApiProvider.signUpUser(userCredentials);
+  Future<bool> signUpUser(Map<String, dynamic> userCredentials) =>
+      userApiProvider.signUpUser(userCredentials);
 
-  Future<UserDetails> signInUser(userCredentials) => userApiProvider.signInUser(userCredentials);
+  Future<bool> signInUser(Map<String, dynamic> userCredentials) =>
+      userApiProvider.signInUser(userCredentials);
+
+  Future<UserDetails> getUserDetails(String username) =>
+      userApiProvider.getUserDetails(username);
 }

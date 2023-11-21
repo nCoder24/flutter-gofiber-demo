@@ -8,13 +8,16 @@ class Bloc {
 
   Stream<UserDetails> get userDetails => _userDetailsFetcher.stream;
 
-  signUpUser(Map userCredentials) async {
-    UserDetails userDetails = await _repository.signUpUser(userCredentials);
-    _userDetailsFetcher.sink.add(userDetails);
+  signUpUser(Map<String, dynamic> userCredentials) async {
+    return await _repository.signUpUser(userCredentials);
   }
 
-  signInUser(Map userCredentials) async {
-    UserDetails userDetails = await _repository.signInUser(userCredentials);
+  signInUser(Map<String, dynamic> userCredentials) async {
+    return await _repository.signInUser(userCredentials);
+  }
+
+  getUserDetails(String username) async {
+    UserDetails userDetails = await _repository.getUserDetails(username);
     _userDetailsFetcher.sink.add(userDetails);
   }
 

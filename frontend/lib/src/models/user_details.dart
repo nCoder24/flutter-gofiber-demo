@@ -1,11 +1,8 @@
-import 'package:flutter/material.dart';
-
 class UserDetails {
   late String _username;
   late List<_Repo> _repos;
 
   UserDetails.fromJson(Map<String, dynamic> parsedJson) {
-    debugPrint(parsedJson['repos'].length.toString());
     _username = parsedJson['username'];
     List<_Repo> temp = [];
     for (int index = 0; index < parsedJson['repos'].length; index++) {

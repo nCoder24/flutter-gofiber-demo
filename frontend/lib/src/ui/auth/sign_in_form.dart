@@ -43,7 +43,7 @@ class SignInFormState extends State<SignInForm> {
                   height: 15,
                 ),
                 FormBuilderTextField(
-                  name: "username field",
+                  name: "username",
                   key: const Key("username"),
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
