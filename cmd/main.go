@@ -5,21 +5,17 @@ import (
 	"demo/config"
 	"demo/core/service"
 	"demo/database"
-	"os"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
-	config.GetConfig()
+	config := config.GetConfig()
 	app := fiber.New()
 
-	dbURI := os.Getenv("MONGODB_URI")
-	port := ":" + os.Getenv("PORT")
-
-	db := database.GetDB(database.Connect(dbURI))
+	db := database.GetDB(database.Connect(config.MongodbURI))
 	services := service.InitServices(db)
 
 	server.Init(app, services)
-	app.Listen(port)
+	app.Listen(config.Port)
 }
