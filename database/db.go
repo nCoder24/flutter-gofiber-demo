@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"log"
 
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -20,6 +21,6 @@ func GetDB(client *mongo.Client) DB {
 
 func (db DB) Disconnect() {
 	if err := db.client.Disconnect(context.TODO()); err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 }

@@ -17,6 +17,7 @@ func NewUserHandler(service service.UserService) UserHandler {
 
 func (handler UserHandler) GetAccount(c *fiber.Ctx) error {
 	username := c.Params("username")
+
 	account, err := handler.service.GetAccount(username)
 
 	if err != nil {

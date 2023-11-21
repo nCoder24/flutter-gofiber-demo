@@ -4,6 +4,8 @@ import (
 	"context"
 	"demo/core/models"
 	"demo/database/schema"
+	"demo/pkg/errors"
+	"log"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -22,6 +24,16 @@ func (db UserDB) GetAccountByUsername(username string) (schema.Account, error) {
 	account := new(schema.Account)
 
 	err := db.accounts.FindOne(context.TODO(), filter).Decode(account)
+
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return *account, errors.AccountNotFound
+		}
+
+		log.Println(err)
+		return *account, errors.FailedToFetchAccount
+	}
+
 	return *account, err
 }
 
@@ -31,5 +43,10 @@ func (db UserDB) InsertNewAccount(acData models.AccountDetails) error {
 		Password: acData.Password,
 	})
 
-	return err
+	if err != nil {
+		log.Println(err)
+		return errors.FailedToCreateAccount
+	}
+
+	return nil
 }
