@@ -6,5 +6,6 @@ var (
 	FailedToFetchAccount  = fiber.NewError(500, "Failed To Fetch Account")
 	FailedToCreateAccount = fiber.NewError(500, "Failed To Create Account")
 
-	AccountNotFound = fiber.NewError(404, "Account Not Found")
+	AccountNotFound    = fiber.NewError(404, "Account Not Found")
+	InvalidCredentials = fiber.NewError(400, "Invalid Credentials")
 )
