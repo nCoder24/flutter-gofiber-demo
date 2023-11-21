@@ -1,6 +1,7 @@
 package server
 
 import (
+	"demo/api/handler"
 	"demo/api/router"
 	"demo/core/service"
 	"demo/database"
@@ -9,11 +10,18 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
-func CreateServer(db database.DB) *fiber.App {
-	app := fiber.New()
+func initialize(app *fiber.App, services service.Services) {
 	app.Use(logger.New())
 
-	router.RegisterRoutes(app, service.InitServices(db))
+	handler := handler.Handler{
+		User: handler.NewUserHandler(services.UserService),
+	}
 
+	router.RegisterRoutes(app, handler)
+}
+
+func New(db database.DB) *fiber.App {
+	app := fiber.New()
+	initialize(app, service.InitServices(db))
 	return app
 }

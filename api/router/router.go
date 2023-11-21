@@ -1,11 +1,14 @@
 package router
 
 import (
-	"demo/core/service"
+	"demo/api/handler"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-func RegisterRoutes(app *fiber.App, services service.Services) {
-	registerUserRoutes(app.Group("user"), services)
+func RegisterRoutes(app *fiber.App, handler handler.Handler) {
+	router := app.Group("/user")
+	router.Post("/", handler.User.CreateAccount)
+	router.Get("/:username", handler.User.GetAccount)
+	router.Post("/login", handler.User.Login)
 }

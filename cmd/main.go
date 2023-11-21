@@ -14,5 +14,5 @@ func main() {
 	port := ":" + os.Getenv("PORT")
 
 	db := database.GetDB(database.Connect(dbURI))
-	server.CreateServer(db).Listen(port)
+	server.New(db).Listen(port)
 }
