@@ -20,6 +20,6 @@ func GetConfig() Config {
 
 	return Config{
 		MongodbURI: os.Getenv("MONGODB_URI"),
-		Port:       os.Getenv("MONGODB_URI"),
+		Port:       ":" + os.Getenv("PORT"),
 	}
 }
