@@ -13,11 +13,11 @@ func RegisterRoutes(app *fiber.App, handler handler.Handler) {
 	router := app.Group("/user")
 
 	router.Post("/",
-		parser.ParseBody[models.AccountDetails],
+		parser.ParseBody[models.UserDetails],
 		validator.Validate,
-		handler.User.CreateAccount,
+		handler.User.CreateUser,
 	)
 
-	router.Get("/:username", handler.User.GetAccount)
+	router.Get("/:username", handler.User.GetUser)
 	router.Post("/login", handler.User.Login)
 }

@@ -1,10 +1,10 @@
 package models
 
-type AccountDetails struct {
+type UserDetails struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
 
-func (details AccountDetails) IsValid() bool {
+func (details UserDetails) IsValid() bool {
 	return details.Username != "" && details.Password != ""
 }

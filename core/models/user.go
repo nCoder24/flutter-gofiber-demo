@@ -5,7 +5,7 @@ type User struct {
 	password string
 }
 
-func AccountWith(acDetails AccountDetails) User {
+func UserWith(acDetails UserDetails) User {
 	return User{
 		Username: acDetails.Username,
 		password: acDetails.Password,

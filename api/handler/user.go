@@ -16,10 +16,10 @@ func NewUserHandler(operator operator.UserOperator) UserHandler {
 	return UserHandler{operator}
 }
 
-func (user UserHandler) GetAccount(ctx *fiber.Ctx) error {
+func (user UserHandler) GetUser(ctx *fiber.Ctx) error {
 	username := ctx.Params("username")
 
-	account, err := user.operator.GetAccount(username)
+	account, err := user.operator.GetUser(username)
 
 	if err != nil {
 		return err
@@ -28,10 +28,10 @@ func (user UserHandler) GetAccount(ctx *fiber.Ctx) error {
 	return ctx.JSON(account)
 }
 
-func (user UserHandler) CreateAccount(ctx *fiber.Ctx) error {
-	details := ctx.Locals(constant.Resource).(models.AccountDetails)
+func (user UserHandler) CreateUser(ctx *fiber.Ctx) error {
+	details := ctx.Locals(constant.Resource).(models.UserDetails)
 
-	if err := user.operator.CreateAccount(details); err != nil {
+	if err := user.operator.CreateUser(details); err != nil {
 		return err
 	}
 
