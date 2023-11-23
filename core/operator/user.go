@@ -19,17 +19,17 @@ func initUserOperator(db database.DB) UserOperator {
 func (op *UserOperator) GetUser(username string) (models.UserData, error) {
 	data, err := op.db.FindUserByUsername(username)
 
-	if err != nil {
-		log.Println(err)
-
-		if err == dbErs.ErrDocumentNotFound {
-			return models.UserData{}, internalErrs.ErrUserDoesNotExists
-		}
-
-		return models.UserData{}, internalErrs.ErrCouldNotGetUser
+	if err == nil {
+		return models.UserData(data), nil
 	}
 
-	return models.UserData(data), nil
+	log.Println(err)
+	if err == dbErs.ErrDocumentNotFound {
+		return models.UserData{}, internalErrs.ErrUserDoesNotExists
+	}
+
+	return models.UserData{}, internalErrs.ErrCouldNotGetUser
+
 }
 
 func (op *UserOperator) AddNewUser(usrData models.UserData) error {

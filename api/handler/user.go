@@ -23,16 +23,16 @@ func (usr UserHandler) GetUser(ctx *fiber.Ctx) error {
 	username := ctx.Params("username")
 	user, err := usr.operator.GetUser(username)
 
-	if err != nil {
-		log.Println(err)
-		if err == internalErrs.ErrUserDoesNotExists {
-			return apiErrs.UserNotFound
-		}
-
-		return apiErrs.CouldNotGetUser
+	if err == nil {
+		return ctx.JSON(user)
 	}
 
-	return ctx.JSON(user)
+	log.Println(err)
+	if err == internalErrs.ErrUserDoesNotExists {
+		return apiErrs.UserNotFound
+	}
+
+	return apiErrs.CouldNotGetUser
 }
 
 func (usr UserHandler) AddNewUser(ctx *fiber.Ctx) error {

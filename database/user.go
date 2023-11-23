@@ -26,16 +26,16 @@ func (db UserDB) FindUserByUsername(username string) (schema.User, error) {
 
 	err := db.user.FindOne(context.TODO(), filter).Decode(account)
 
-	if err != nil {
-		log.Println(err)
-		if err == mongo.ErrNoDocuments {
-			return *account, errors.ErrDocumentNotFound
-		}
-
-		return *account, errors.ErrFailedToFetch
+	if err == nil {
+		return *account, err
 	}
 
-	return *account, err
+	log.Println(err)
+	if err == mongo.ErrNoDocuments {
+		return *account, errors.ErrDocumentNotFound
+	}
+
+	return *account, errors.ErrFailedToFetch
 }
 
 func (db UserDB) InsertUser(acData models.UserData) error {

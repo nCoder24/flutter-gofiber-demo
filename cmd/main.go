@@ -6,11 +6,13 @@ import (
 	"demo/core/operator"
 	"demo/database"
 	"demo/database/connection"
+	"log"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
+	log.SetFlags(log.Llongfile)
 	config := config.GetConfig()
 	app := fiber.New()
 
@@ -18,5 +20,5 @@ func main() {
 	operators := operator.InitOperators(db)
 
 	server.Init(app, operators)
-	app.Listen(config.Port)
+	log.Fatal(app.Listen(config.Port))
 }
