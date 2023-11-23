@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"demo/database/constant"
 	"log"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -15,7 +16,7 @@ type DB struct {
 func GetDB(client *mongo.Client) DB {
 	return DB{
 		client: client,
-		UserDB: getUserDB(client.Database("user")),
+		UserDB: getUserDB(client.Database(constant.DatabaseName)),
 	}
 }
 

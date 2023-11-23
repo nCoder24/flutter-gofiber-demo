@@ -9,5 +9,5 @@ type Services struct {
 }
 
 func InitOperators(db database.DB) Services {
-	return Services{initUserService(db)}
+	return Services{initUserOperator(db)}
 }
