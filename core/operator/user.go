@@ -13,11 +13,11 @@ func initUserService(db database.DB) UserOperator {
 	return UserOperator{db.UserDB}
 }
 
-func (service *UserOperator) GetAccount(username string) (models.Account, error) {
+func (service *UserOperator) GetAccount(username string) (models.User, error) {
 	data, err := service.db.GetAccountByUsername(username)
 
 	if err != nil {
-		return models.Account{}, err
+		return models.User{}, err
 	}
 
 	return models.AccountWith(models.AccountDetails(data)), nil

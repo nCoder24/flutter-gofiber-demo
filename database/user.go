@@ -19,9 +19,9 @@ func getUserDB(db *mongo.Database) UserDB {
 	return UserDB{*db.Collection("accounts")}
 }
 
-func (db UserDB) GetAccountByUsername(username string) (schema.Account, error) {
+func (db UserDB) GetAccountByUsername(username string) (schema.User, error) {
 	filter := bson.D{{Key: "username", Value: username}}
-	account := new(schema.Account)
+	account := new(schema.User)
 
 	err := db.accounts.FindOne(context.TODO(), filter).Decode(account)
 
@@ -38,7 +38,7 @@ func (db UserDB) GetAccountByUsername(username string) (schema.Account, error) {
 }
 
 func (db UserDB) InsertNewAccount(acData models.AccountDetails) error {
-	_, err := db.accounts.InsertOne(context.TODO(), schema.Account{
+	_, err := db.accounts.InsertOne(context.TODO(), schema.User{
 		Username: acData.Username,
 		Password: acData.Password,
 	})
