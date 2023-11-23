@@ -3,7 +3,6 @@ package service
 import (
 	"demo/core/models"
 	"demo/database"
-	"demo/pkg/errors"
 )
 
 type UserService struct {
@@ -21,14 +20,10 @@ func (service *UserService) GetAccount(username string) (models.Account, error) 
 		return models.Account{}, err
 	}
 
-	return models.AccountWith(data.Username, data.Password), nil
+	return models.AccountWith(models.AccountDetails(data)), nil
 }
 
 func (service *UserService) CreateAccount(acDetails models.AccountDetails) error {
-	if acDetails.Username == "" || acDetails.Password == "" {
-		return errors.InvalidCredentials
-	}
-
 	return service.db.InsertNewAccount(acDetails)
 }
 

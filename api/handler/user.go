@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"demo/api/constant"
 	"demo/core/models"
 	"demo/core/service"
 
@@ -15,51 +16,47 @@ func NewUserHandler(service service.UserService) UserHandler {
 	return UserHandler{service}
 }
 
-func (handler UserHandler) GetAccount(c *fiber.Ctx) error {
-	username := c.Params("username")
+func (user UserHandler) GetAccount(ctx *fiber.Ctx) error {
+	username := ctx.Params("username")
 
-	account, err := handler.service.GetAccount(username)
+	account, err := user.service.GetAccount(username)
 
 	if err != nil {
 		return err
 	}
 
-	return c.JSON(account)
+	return ctx.JSON(account)
 }
 
-func (handler UserHandler) CreateAccount(c *fiber.Ctx) error {
-	acDetails := new(models.AccountDetails)
+func (user UserHandler) CreateAccount(ctx *fiber.Ctx) error {
+	details := ctx.Locals(constant.Resource).(models.AccountDetails)
 
-	if err := c.BodyParser(acDetails); err != nil {
-		return err // Check if there's a better way of handling server err
-	}
-
-	if err := handler.service.CreateAccount(*acDetails); err != nil {
+	if err := user.service.CreateAccount(details); err != nil {
 		return err
 	}
 
-	return c.SendStatus(fiber.StatusCreated)
+	return ctx.SendStatus(fiber.StatusCreated)
 }
 
-func (handler UserHandler) Login(c *fiber.Ctx) error {
+func (user UserHandler) Login(ctx *fiber.Ctx) error {
 	credentials := new(struct {
 		Username string `json:"username"`
 		Password string `json:"password"`
 	})
 
-	if err := c.BodyParser(credentials); err != nil {
+	if err := ctx.BodyParser(credentials); err != nil {
 		return err
 	}
 
-	success, err := handler.service.AuthenticateUser(credentials.Username, credentials.Password)
+	success, err := user.service.AuthenticateUser(credentials.Username, credentials.Password)
 
 	if err != nil {
 		return err
 	}
 
 	if success {
-		return c.SendStatus(fiber.StatusAccepted)
+		return ctx.SendStatus(fiber.StatusAccepted)
 	}
 
-	return c.SendStatus(fiber.StatusUnauthorized)
+	return ctx.SendStatus(fiber.StatusUnauthorized)
 }

@@ -5,10 +5,10 @@ type Account struct {
 	password string
 }
 
-func AccountWith(username string, password string) Account {
+func AccountWith(acDetails AccountDetails) Account {
 	return Account{
-		Username: username,
-		password: password,
+		Username: acDetails.Username,
+		password: acDetails.Password,
 	}
 }
 
