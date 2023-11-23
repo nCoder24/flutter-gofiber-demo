@@ -3,23 +3,23 @@ package handler
 import (
 	"demo/api/constant"
 	"demo/core/models"
-	"demo/core/service"
+	"demo/core/operator"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 type UserHandler struct {
-	service service.UserService
+	operator operator.UserOperator
 }
 
-func NewUserHandler(service service.UserService) UserHandler {
-	return UserHandler{service}
+func NewUserHandler(operator operator.UserOperator) UserHandler {
+	return UserHandler{operator}
 }
 
 func (user UserHandler) GetAccount(ctx *fiber.Ctx) error {
 	username := ctx.Params("username")
 
-	account, err := user.service.GetAccount(username)
+	account, err := user.operator.GetAccount(username)
 
 	if err != nil {
 		return err
@@ -31,7 +31,7 @@ func (user UserHandler) GetAccount(ctx *fiber.Ctx) error {
 func (user UserHandler) CreateAccount(ctx *fiber.Ctx) error {
 	details := ctx.Locals(constant.Resource).(models.AccountDetails)
 
-	if err := user.service.CreateAccount(details); err != nil {
+	if err := user.operator.CreateAccount(details); err != nil {
 		return err
 	}
 
@@ -48,7 +48,7 @@ func (user UserHandler) Login(ctx *fiber.Ctx) error {
 		return err
 	}
 
-	success, err := user.service.AuthenticateUser(credentials.Username, credentials.Password)
+	success, err := user.operator.AuthenticateUser(credentials.Username, credentials.Password)
 
 	if err != nil {
 		return err

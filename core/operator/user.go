@@ -1,19 +1,19 @@
-package service
+package operator
 
 import (
 	"demo/core/models"
 	"demo/database"
 )
 
-type UserService struct {
+type UserOperator struct {
 	db database.UserDB
 }
 
-func initUserService(db database.DB) UserService {
-	return UserService{db.UserDB}
+func initUserService(db database.DB) UserOperator {
+	return UserOperator{db.UserDB}
 }
 
-func (service *UserService) GetAccount(username string) (models.Account, error) {
+func (service *UserOperator) GetAccount(username string) (models.Account, error) {
 	data, err := service.db.GetAccountByUsername(username)
 
 	if err != nil {
@@ -23,11 +23,11 @@ func (service *UserService) GetAccount(username string) (models.Account, error) 
 	return models.AccountWith(models.AccountDetails(data)), nil
 }
 
-func (service *UserService) CreateAccount(acDetails models.AccountDetails) error {
+func (service *UserOperator) CreateAccount(acDetails models.AccountDetails) error {
 	return service.db.InsertNewAccount(acDetails)
 }
 
-func (service *UserService) AuthenticateUser(username, password string) (bool, error) {
+func (service *UserOperator) AuthenticateUser(username, password string) (bool, error) {
 	ac, err := service.GetAccount(username)
 
 	if err != nil {

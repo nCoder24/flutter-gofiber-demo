@@ -3,7 +3,7 @@ package main
 import (
 	"demo/api/server"
 	"demo/config"
-	"demo/core/service"
+	"demo/core/operator"
 	"demo/database"
 	"demo/database/connection"
 
@@ -15,8 +15,8 @@ func main() {
 	app := fiber.New()
 
 	db := database.GetDB(connection.Connect(config.MongodbURI))
-	services := service.InitServices(db)
+	operators := operator.InitOperators(db)
 
-	server.Init(app, services)
+	server.Init(app, operators)
 	app.Listen(config.Port)
 }

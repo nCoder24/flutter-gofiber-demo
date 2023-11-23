@@ -1,13 +1,13 @@
-package service
+package operator
 
 import (
 	"demo/database"
 )
 
 type Services struct {
-	UserService UserService
+	UserService UserOperator
 }
 
-func InitServices(db database.DB) Services {
+func InitOperators(db database.DB) Services {
 	return Services{initUserService(db)}
 }
