@@ -4,8 +4,9 @@ import (
 	"context"
 	"demo/core/models"
 	"demo/database/constant"
-	"demo/database/errors"
+	dbErrs "demo/database/errors"
 	"demo/database/schema"
+	"errors"
 	"log"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -27,15 +28,26 @@ func (db UserDB) FindUserByUsername(username string) (schema.User, error) {
 	err := db.user.FindOne(context.TODO(), filter).Decode(account)
 
 	if err == nil {
-		return *account, err
+		return *account, nil
 	}
 
 	log.Println(err)
-	if err == mongo.ErrNoDocuments {
-		return *account, errors.ErrDocumentNotFound
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return *account, dbErrs.ErrDocumentNotFound
 	}
 
-	return *account, errors.ErrFailedToFetch
+	return *account, dbErrs.ErrFailedToFetch
+}
+
+// CheckUserExists TODO: Implement using aggregation instead of relying on errors
+func (db UserDB) CheckUserExists(username string) (bool, error) {
+	_, err := db.FindUserByUsername(username)
+
+	if err == nil || errors.Is(err, dbErrs.ErrDocumentNotFound) {
+		return true, nil
+	}
+
+	return false, err
 }
 
 func (db UserDB) InsertUser(acData models.UserData) error {
@@ -46,7 +58,7 @@ func (db UserDB) InsertUser(acData models.UserData) error {
 
 	if err != nil {
 		log.Println(err)
-		return errors.ErrFailedToInsert
+		return dbErrs.ErrFailedToInsert
 	}
 
 	return nil

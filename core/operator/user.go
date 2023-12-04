@@ -4,7 +4,8 @@ import (
 	internalErrs "demo/core/errors"
 	"demo/core/models"
 	"demo/database"
-	dbErs "demo/database/errors"
+	dbErrs "demo/database/errors"
+	"errors"
 	"log"
 )
 
@@ -24,14 +25,24 @@ func (op *UserOperator) GetUser(username string) (models.UserData, error) {
 	}
 
 	log.Println(err)
-	if err == dbErs.ErrDocumentNotFound {
+	if errors.Is(err, dbErrs.ErrDocumentNotFound) {
 		return models.UserData{}, internalErrs.ErrUserDoesNotExists
 	}
 
-	return models.UserData{}, internalErrs.ErrCouldNotGetUser
-
+	return models.UserData{}, internalErrs.ErrCouldNotFetchUsers
 }
 
 func (op *UserOperator) AddNewUser(usrData models.UserData) error {
+	userExists, err := op.db.CheckUserExists(usrData.Username)
+
+	if err != nil {
+		log.Println(err)
+		return internalErrs.ErrCouldNotAddUser
+	}
+
+	if userExists {
+		return internalErrs.ErrUserAlreadyExists
+	}
+
 	return op.db.InsertUser(usrData)
 }

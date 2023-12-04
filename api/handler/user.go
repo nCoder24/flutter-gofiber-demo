@@ -6,6 +6,7 @@ import (
 	internalErrs "demo/core/errors"
 	"demo/core/models"
 	"demo/core/operator"
+	"errors"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -28,7 +29,7 @@ func (usr UserHandler) GetUser(ctx *fiber.Ctx) error {
 	}
 
 	log.Println(err)
-	if err == internalErrs.ErrUserDoesNotExists {
+	if errors.Is(err, internalErrs.ErrUserDoesNotExists) {
 		return apiErrs.UserNotFound
 	}
 
